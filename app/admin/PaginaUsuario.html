@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"> -->
+    <link href=".htaccess" rel="stylesheet" type="text">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <!-- <<link rel="stylesheet" href="css/materialize.min.css">  -->
+    <!-- <script src="js/materialize.min.js"></script> -->
+    <!-- <link href="index.css" rel="stylesheet" type="text/css"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script>
+    //   const mp = new MercadoPago('TEST-27dd4f15-1b71-4189-8d5f-37f07e3caeb2');
+    
+</script>
+    <title>WebMed</title>
+</head>
+
+<body>
+ 
+    <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo right">WebMed</a>
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a href="#">O que é?</a></li>
+            <li><a href="#">Como funciona?</a></li>
+            <li><a href="#">Área do Usuario</a></li>
+          </ul>
+        </div>
+      </nav>
+  <div class="container">
+   
+    <div class="row">
+
+        <div class="col s4">
+          Dados para a compra
+        </div>
+        <main>
+          <!-- Hidden input to store your integration public key -->
+          <input type="hidden" id="mercado-pago-public-key" value="{{TEST-27dd4f15-1b71-4189-8d5f-37f07e3caeb2}}">
+      
+          <!-- Shopping Cart -->
+          <section class="shopping-cart dark">
+              <div class="container container__cart">
+                  <div class="block-heading">
+
+                  </div>
+                  <div class="content">
+                      <div class="row">
+                          <div class="col-md-12 col-lg-8">
+                              <div class="items">
+                                  <div class="product">
+                                      <div class="info">
+                                          <div class="product-details">
+                                              <div class="row justify-content-md-center">
+                                                     <div class="col-md-4 product-detail">
+                                                         <div class="product-info">
+                                                          <p><b>Descrição: </b><span id="product-description">A  description</span><br>
+                                                            
+                                                              <b>Valor</b> $ <span id="unit-price">10</span></p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-md-3 product-detail">
+                                                      <label for="quantity"><h5>Quantity</h5></label>
+                                                      <input type="number" id="quantity" value="1" min="1" class="form-control">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-12 col-lg-4">
+                              <div class="summary">
+                                  <h3>Cart</h3>
+                                  <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total"></span></div>
+                                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn">Checkout</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <!-- Payment -->
+          <section class="payment-form dark">
+              <div class="container__payment">
+                  <div class="block-heading">
+                      <h2>Pagamento</h2>
+                      
+                  </div>
+                  <div class="form-payment">
+                      <div class="products">
+                          <h2 class="title">Summary</h2>
+                          <div class="item">
+                              <span class="price" id="summary-price"></span>
+                              <p class="item-name">Consulta<span id="summary-quantity"></span></p>
+                          </div>
+                          <div class="total">Total<span class="price" id="summary-total"></span></div>
+                      </div>
+                      <div class="payment-details">
+                          <form id="form-checkout">
+                              <h3 class="title">Comprador</h3>
+                              <div class="row">
+                                  <div class="form-group col">
+                                      <input id="form-checkout__cardholderEmail" name="cardholderEmail" type="email" value="test_user_94331262@testuser.com" class="form-control" />
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="form-group col-sm-5">
+                                      <select id="form-checkout__identificationType" name="identificationType" value="CPF" class="form-control"></select>
+                                  </div>
+                                  <div class="form-group col-sm-7">
+                                      <input id="form-checkout__identificationNumber" name="docNumber" type="text" value="11111111111" class="form-control"/>
+                                  </div>
+                              </div>
+                              <br>
+                              <h3 class="title">Card Details</h3>
+                              <div class="row">
+                                  <div class="form-group col-sm-8">
+                                      <input id="form-checkout__cardholderName" name="cardholderName" type="text" value="Test Test" class="form-control"/>
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                      <div class="input-group expiration-date">
+                                          <div id="form-checkout__expirationDate" value="11/25" class="form-control h-40"></div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-sm-8">
+                                      <div id="form-checkout__cardNumber" value="5031 4332 1540 6351" class="form-control h-40"></div>
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                      <div id="form-checkout__securityCode" value="123" class="form-control h-40"></div>
+                                  </div>
+                                  <div id="issuerInput" class="form-group col-sm-12 hidden">
+                                      <select id="form-checkout__issuer" name="issuer" value="Mastercard" class="form-control"></select>
+                                  </div>
+                                  <div class="form-group col-sm-12">
+                                      <select id="form-checkout__installments" name="installments" type="text" value="0" class="form-control"></select>
+                                  </div>
+                                  <div class="form-group col-sm-12">
+                                      <input type="hidden" id="amount" />
+                                      <input type="hidden" id="description" />
+                                      <div id="validation-error-messages">
+                                      </div>
+                                      <br>
+                                      <button id="form-checkout__submit" type="submit" class="btn btn-primary btn-block">Pay</button>
+                                      <br>
+                                 
+                                      <br>
+                                      <a id="go-back">
+                                       
+                                         
+                                      </a>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <!-- Result -->
+          <section class="shopping-cart dark">
+              <div class="container container__result">
+                  <div class="block-heading">
+                      <h2>Payment Result</h2>
+                     
+                  </div>
+                  <div class="content">
+                      <div class="row">
+                          <div class="col-md-12 col-lg-12">
+                              <div class="items product info product-details">
+                                  <div class="row justify-content-md-center">
+                                      <div class="col-md-4 product-detail">
+                                          <div class="product-info">
+                                              <div id="fail-response">
+                                                  <br/>
+                                                
+                                                  <p class="text-center font-weight-bold">ERRO</p>
+                                                  <p id="error-message" class="text-center"></p>
+                                                  <br/>
+                                              </div>
+      
+                                              <div id="success-response">
+                                                  <br/>
+                                                  <p><b>ID: </b><span id="payment-id"></span></p>
+                                                  <p><b>Status: </b><span id="payment-status"></span></p>
+                                                  <p><b>Detail: </b><span id="payment-detail"></span></p>
+                                                  <br/>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </main>
+          
+   
+
+
+<footer class="page-footer" style="color:grey">
+    <div class="container">
+      <div class="row">
+        <div class="col l4 s12">
+          <h5 class="white-text">WEBMED</h5>
+          <p class="grey-text text-lighten-4">WebMed, seu centro de assistencia médica sempre ao seu dispor!</p>
+        </div>
+        <div class="col l4 offset-l4 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="index.html">Volte ao topo</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!"></a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      © 2022 Arca Digital
+      <a class="grey-text text-lighten-4 right" href=https://www.youtube.com/channel/UC_vuTwn7Ynj0Ki7u03WI_uA!">Conheça nossa empresa</a>
+      </div>
+    </div>
+  </footer>
+</body>
+<script src="js/index.js"></script>
+</html>
+

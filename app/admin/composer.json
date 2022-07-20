@@ -1,0 +1,8 @@
+{
+    "require": {
+        "mercadopago/dx-php": "2.4.8"
+    },
+    "config": {
+        "platform-check": false
+    }
+}
